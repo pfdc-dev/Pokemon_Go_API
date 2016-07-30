@@ -2,6 +2,7 @@
 import config
 import json
 import re
+import requests
 from collections import OrderedDict
 try:
 	from gpsoauth import perform_master_login, perform_oauth
@@ -36,8 +37,8 @@ def login_pokemon(user,passw):
 		access_token=re.sub('.*en=','',r2.content)
 		access_token=re.sub('.com.*','.com',access_token)
 		return access_token
-	except:
-		print '[-] pokemon attacking the login server'
+	except requests.exceptions.RequestException as exception:
+		print '[-] pokemon attacking the login server ' + str(exception)
 		return None
 	
 def login_google_v2(email,passw):
